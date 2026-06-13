@@ -24,15 +24,7 @@ Pastikan sistem Anda telah terinstal perangkat lunak berikut:
    composer install
    ```
 
-3. **Instalasi Dependensi Frontend**
-   Jalankan perintah berikut untuk mengunduh dan melakukan *build* aset CSS/JS:
-   ```bash
-   npm install
-   npm run build
-   ```
-   *(Catatan: Anda juga bisa menggunakan `npm run dev` saat aktif melakukan pengembangan tampilan).*
-
-4. **Konfigurasi Environment (`.env`)**
+3. **Konfigurasi Environment (`.env`)**
    Salin file konfigurasi bawaan Laravel:
    ```bash
    cp .env.example .env
@@ -47,13 +39,13 @@ Pastikan sistem Anda telah terinstal perangkat lunak berikut:
    DB_PASSWORD=password_anda
    ```
 
-5. **Generate Application Key**
+4. **Generate Application Key**
    Untuk mengamankan sesi dan enkripsi data:
    ```bash
    php artisan key:generate
    ```
 
-6. **Konfigurasi Midtrans (Payment Gateway)**
+5. **Konfigurasi Midtrans (Payment Gateway)**
    Tambahkan konfigurasi kunci Midtrans di dalam `.env`. Anda bisa mendapatkan *Server Key* dan *Client Key* dari [Dashboard Midtrans Sandbox](https://simulator.sandbox.midtrans.com/).
    ```env
    MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxxxxxxxxxxxxxx
@@ -62,13 +54,13 @@ Pastikan sistem Anda telah terinstal perangkat lunak berikut:
    MIDTRANS_SNAP_URL=https://app.sandbox.midtrans.com/snap/snap.js
    ```
 
-7. **Konfigurasi Folder Penyimpanan (Storage)**
+6. **Konfigurasi Folder Penyimpanan (Storage)**
    Hubungkan direktori publik ke direktori *storage* agar foto menu bisa diakses via *browser*:
    ```bash
    php artisan storage:link
    ```
 
-8. **Migrasi Database & Seeding**
+7. **Migrasi Database & Seeding**
    Langkah ini akan membangun tabel *database* dan mengisinya dengan data *dummy* awal (termasuk akun Admin default):
    ```bash
    php artisan migrate --seed

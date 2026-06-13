@@ -49,13 +49,7 @@
    composer install
    ```
 
-3. **Install dependensi NPM:**
-   ```bash
-   npm install
-   npm run build
-   ```
-
-4. **Konfigurasi Environment:**
+3. **Konfigurasi Environment:**
    Salin file `.env.example` menjadi `.env`:
    ```bash
    cp .env.example .env
@@ -65,7 +59,7 @@
    php artisan key:generate
    ```
 
-5. **Konfigurasi Database & Migrasi:**
+4. **Konfigurasi Database & Migrasi:**
    Secara default, project ini menggunakan SQLite. Anda dapat menjalankan perintah migrasi dan seeder untuk langsung mengisi data awal (dummy data):
    ```bash
    php artisan migrate:fresh --seed
