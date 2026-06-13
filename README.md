@@ -1,38 +1,108 @@
-SiKats
+# SiKats - Point of Sales (POS) System
 
-## Admin (1)
-    - Melihat laporan
-    - Menambah,mengubah,menghapus daftar menu dan harga
-    - Menambah,mengubah,menghapus daftar user
+**SiKats** adalah aplikasi kasir (Point of Sales) berbasis web modern yang dirancang khusus untuk restoran, kafe, atau bisnis F&B. Aplikasi ini dibangun menggunakan framework **Laravel 11** dan mengusung sistem pemesanan modern dengan alur *Pay-First* (Pesan -> Bayar -> Masak -> Sajikan).
 
-## Kasir (2)
-    - Melihat harga dan total harga pesanan
-    - Konfirmasi pembayaran
-    - Membuat bukti pembayaran
+## 🚀 Fitur Utama
 
-## Pelayan (3)
-    - Melihat menu dan harga
-    - Memilih menu
-    - Melihat total harga pesanan
-    - Membuat,update,hapus pesanan
+- **Role Management:**
+  - **Admin:** Mengelola master data (Pengguna, Meja, Kategori, Menu, Stok).
+  - **Kasir:** Melayani pelanggan, membuat pesanan, dan memproses pembayaran.
+  - **Waiter (Pelayan):** Membantu melayani pelanggan dan membuat pesanan.
+  - **Dapur (Kitchen):** Memantau pesanan yang masuk secara real-time dan memperbarui status masakan (Antrean -> Dimasak -> Siap).
 
-## Dapur (4)
-    - Menerima pesanan
-    - Konfirmasi terima pesanan
-    - Mengubah status "siap saji"
+- **Sistem Pembayaran Fleksibel:**
+  - **Tunai (Cash):** Pembayaran tunai dengan kalkulasi kembalian otomatis.
+  - **Midtrans Integration:** Mendukung pembayaran cashless (QRIS, GoPay, Transfer Bank, dll) menggunakan gateway Midtrans.
 
-## Admin (1)
-- Daftar menu
-- Pesanan
-- User
-- Report
+- **Real-Time Synchronisation (KDS & Active Orders):**
+  - **Kitchen Display System (KDS):** Layar dapur akan otomatis diperbarui. Dapur hanya melihat pesanan yang sudah dibayar (status `proses`).
+  - **Active Orders:** Layar kasir dan pelayan akan menarik pembaruan secara real-time (menggunakan AJAX polling) sehingga status "Siap Saji" dari dapur dapat langsung terpantau tanpa perlu me-refresh halaman.
 
-## Kasir (2)
-- Daftar menu
-- Pesanan
+- **Cetak Struk PDF:**
+  - Struk transaksi akan otomatis dibuat dalam format PDF (menggunakan `barryvdh/laravel-dompdf`) setelah pembayaran berhasil. Struk akan dibuka di tab baru secara otomatis.
 
-## Pelayan (3)
-- Pesanan
+- **Desain UI/UX Modern & Responsif:**
+  - Tampilan yang bersih, minimalis, dan sangat responsif di perangkat mobile maupun desktop, memanfaatkan Bootstrap 5, ikon Bootstrap, dan SweetAlert2.
 
-## Dapur (4)
-- Pesanan
+## 🛠 Teknologi yang Digunakan
+
+- **Backend:** Laravel 11.x, PHP 8.3
+- **Database:** SQLite (Default, mudah digunakan untuk environment lokal/testing) atau MySQL.
+- **Frontend:** HTML5, CSS3, Bootstrap 5, Vanilla JavaScript.
+- **Library Tambahan:**
+  - `midtrans/midtrans-php` untuk Payment Gateway
+  - `barryvdh/laravel-dompdf` untuk generate struk PDF
+  - `realrashid/sweet-alert` untuk notifikasi pop-up yang cantik
+
+## 📦 Persyaratan Sistem
+
+- PHP 8.2 atau lebih baru
+- Composer 2.x
+- Node.js & NPM (untuk aset frontend, jika menggunakan Vite/Tailwind di masa depan)
+
+## ⚙️ Panduan Instalasi
+
+1. **Clone repositori ini atau salin folder project ke komputer Anda.**
+
+2. **Install dependensi PHP menggunakan Composer:**
+   ```bash
+   composer install
+   ```
+
+3. **Install dependensi NPM:**
+   ```bash
+   npm install
+   npm run build
+   ```
+
+4. **Konfigurasi Environment:**
+   Salin file `.env.example` menjadi `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Lalu *generate* application key:
+   ```bash
+   php artisan key:generate
+   ```
+
+5. **Konfigurasi Database & Migrasi:**
+   Secara default, project ini menggunakan SQLite. Anda dapat menjalankan perintah migrasi dan seeder untuk langsung mengisi data awal (dummy data):
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+   *(Data Seeder akan membuatkan akun Admin, Kasir, Waiter, dan Dapur default beserta beberapa contoh Menu).*
+
+6. **Konfigurasi Midtrans (Wajib untuk Pembayaran Online):**
+   Buka file `.env` dan sesuaikan kredensial Midtrans Anda:
+   ```env
+   MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxxxxxxxxxxxxxx
+   MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxxxxxxxxxxxxxx
+   MIDTRANS_IS_PRODUCTION=false
+   MIDTRANS_IS_SANITIZED=true
+   MIDTRANS_IS_3DS=true
+   ```
+
+7. **Jalankan Aplikasi:**
+   ```bash
+   php artisan serve
+   ```
+   Aplikasi sekarang dapat diakses di `http://localhost:8000`.
+
+## 🎭 Akun Uji Coba (Jika Menggunakan Seeder)
+
+Apabila Anda telah menjalankan `php artisan db:seed`, Anda bisa menggunakan akun berikut untuk login:
+
+- **Admin:** `admin@example.com` / Password: `password`
+- **Kasir:** `kasir@example.com` / Password: `password`
+- **Waiter:** `waiter@example.com` / Password: `password`
+- **Dapur:** `dapur@example.com` / Password: `password`
+
+## 📡 Konfigurasi Webhook Midtrans (Opsional/Production)
+
+Agar aplikasi dapat menerima notifikasi otomatis dari Midtrans ketika pelanggan selesai membayar, pastikan untuk mengatur **Notification URL** di dashboard Midtrans (Environment Sandbox/Production) agar mengarah ke:
+`https://domain-anda.com/midtrans/webhook`
+
+*(Jika berjalan di localhost, Anda dapat menggunakan [Ngrok](https://ngrok.com/) untuk mendapatkan public URL lalu menambahkannya ke dashboard Midtrans).*
+
+---
+Dibuat dengan ❤️ untuk kemudahan operasional restoran.
