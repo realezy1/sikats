@@ -6,10 +6,9 @@
 <div class="cart-backdrop" id="cartBackdrop"></div>
 
 <div class="container-fluid p-0">
-    <div class="d-flex">
         
         <!-- Main Content (Menu) -->
-        <div class="main-content flex-grow-1 p-3 p-md-4">
+        <div class="main-content p-3 p-md-4">
             
             <!-- Header Area -->
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -93,7 +92,6 @@
             </div>
         </div>
 
-    </div>
 </div>
 
 <!-- Mobile Floating Cart Button -->
