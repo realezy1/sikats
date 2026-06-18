@@ -20,7 +20,7 @@
             </div>
 
             <!-- Categories Scroll -->
-            <div class="d-flex overflow-auto gap-2 mb-4 pb-2" style="scrollbar-width: none;">
+            <div class="d-flex flex-nowrap overflow-auto gap-2 mb-4 pb-2" style="scrollbar-width: none;">
                 <a href="#" class="category-tab active" data-category="all">Semua</a>
                 @foreach($categories as $category)
                     <a href="#" class="category-tab" data-category="{{ $category->id }}">{{ $category->name }}</a>
@@ -154,7 +154,7 @@
 @push('scripts')
 <script>
     // Constants
-    const tableId = {{ $table->id }};
+    const tableId = {{ $table->table_number }};
     const qrToken = '{{ $table->qr_token }}';
     const checkoutUrl = '{{ route("customer.checkout") }}';
     const successUrlBase = '{{ url("/order") }}'; // Will append /{order}/success
@@ -315,11 +315,11 @@
                         <div class="text-danger small fw-bold">${formatCurrency(item.price)}</div>
                     </div>
                     <div class="d-flex align-items-center bg-light rounded-pill px-2 py-1">
-                        <button class="btn btn-sm text-secondary p-0 px-1 border-0" onclick="updateQty(${item.id}, -1)">
+                        <button class="btn btn-sm text-secondary p-0 px-1 border-0 cart-qty-btn" onclick="updateQty(${item.id}, -1)">
                             <i class="bi bi-dash"></i>
                         </button>
-                        <span class="mx-2 small fw-bold" style="width: 16px; text-align: center;">${item.qty}</span>
-                        <button class="btn btn-sm text-secondary p-0 px-1 border-0" onclick="updateQty(${item.id}, 1)">
+                        <span class="mx-2 small fw-bold" style="width: 20px; text-align: center;">${item.qty}</span>
+                        <button class="btn btn-sm text-secondary p-0 px-1 border-0 cart-qty-btn" onclick="updateQty(${item.id}, 1)">
                             <i class="bi bi-plus"></i>
                         </button>
                     </div>

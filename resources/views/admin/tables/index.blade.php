@@ -60,7 +60,7 @@
                                     <td>
                                         <!-- Miniature QR Code -->
                                         @php
-                                            $qrUrl = config('app.url') . '/order?table=' . $table->id . '&token=' . $table->qr_token;
+                                            $qrUrl = config('app.url') . '/order?table=' . $table->table_number . '&token=' . $table->qr_token;
                                         @endphp
                                         <div class="bg-white p-1 rounded border d-inline-block">
                                             {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(50)->generate($qrUrl) !!}

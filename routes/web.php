@@ -18,7 +18,7 @@ Route::get('/dashboard', function (\Illuminate\Http\Request $request) {
     /** @var \App\Models\User $user */
     $user = $request->user();
     $role_id = $user->role_id;
-    return match($role_id) {
+    return match((int) $role_id) {
         1 => redirect()->route('admin.users.index'),
         2 => redirect()->route('cashier.orders.index'),
         3 => redirect()->route('kitchen.dashboard'),

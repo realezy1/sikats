@@ -141,7 +141,16 @@
             }
             .main-content {
                 margin-right: 0;
-                padding-bottom: 80px; /* Space for floating button */
+                padding-bottom: 120px; /* Extra space for floating button so it doesn't overlap menu cards */
+            }
+            /* Larger tap targets for quantity buttons on mobile */
+            .cart-qty-btn {
+                width: 36px !important;
+                height: 36px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 1.1rem !important;
             }
             .cart-backdrop {
                 position: fixed;
