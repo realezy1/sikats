@@ -154,7 +154,7 @@
 @push('scripts')
 <script>
     // Constants
-    const tableId = {{ $table->id }};
+    const tableId = {{ $table->table_number }};
     const qrToken = '{{ $table->qr_token }}';
     const checkoutUrl = '{{ route("customer.checkout") }}';
     const successUrlBase = '{{ url("/order") }}'; // Will append /{order}/success

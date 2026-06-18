@@ -23,7 +23,7 @@ class CustomerOrderController extends Controller
             abort(403, 'Akses ditolak: QR Code tidak valid.');
         }
 
-        $table = Table::where('id', $tableId)
+        $table = Table::where('table_number', $tableId)
             ->where('qr_token', $token)
             ->where('is_active', true)
             ->first();
@@ -57,7 +57,7 @@ class CustomerOrderController extends Controller
     public function checkout(Request $request)
     {
         $request->validate([
-            'table_id' => 'required|exists:tables,id',
+            'table_id' => 'required|exists:tables,table_number',
             'token' => 'required|string',
             'customer_name' => 'nullable|string|max:100',
             'items' => 'required|array|min:1',
@@ -66,7 +66,7 @@ class CustomerOrderController extends Controller
             'items.*.note' => 'nullable|string'
         ]);
 
-        $table = Table::where('id', $request->table_id)
+        $table = Table::where('table_number', $request->table_id)
             ->where('qr_token', $request->token)
             ->first();
 

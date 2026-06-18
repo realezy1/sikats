@@ -69,7 +69,7 @@ class TableController extends Controller
         // For development, we might use ngrok URL if env variable is set, otherwise default to APP_URL
         $baseUrl = config('app.url');
         // Generate the URL for self-ordering
-        $qrUrl = $baseUrl . '/order?table=' . $table->id . '&token=' . $table->qr_token;
+        $qrUrl = $baseUrl . '/order?table=' . $table->table_number . '&token=' . $table->qr_token;
 
         return view('admin.tables.print', compact('table', 'qrUrl'));
     }
