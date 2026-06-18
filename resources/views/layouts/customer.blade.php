@@ -125,6 +125,9 @@
         }
 
         @media (max-width: 991.98px) {
+            html, body {
+                overflow-x: hidden;
+            }
             .cart-sidebar {
                 transform: translateY(100%);
                 bottom: 0;
@@ -141,7 +144,7 @@
             }
             .main-content {
                 margin-right: 0;
-                padding-bottom: 120px; /* Extra space for floating button so it doesn't overlap menu cards */
+                padding-bottom: 120px !important; /* Extra space for floating button so it doesn't overlap menu cards */
             }
             /* Larger tap targets for quantity buttons on mobile */
             .cart-qty-btn {
