@@ -284,6 +284,16 @@
                 @endif
             @endif
             
+            @if($order->status === 'unpaid')
+                <form id="cancelOrderForm" action="{{ route('cashier.orders.destroy', $order->id) }}" method="POST" class="mb-2">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" id="btnCancelOrder" class="btn btn-outline-danger w-100 rounded-pill fw-bold py-2 shadow-sm">
+                        <i class="bi bi-x-circle me-1"></i> Batal Pesan (Hapus)
+                    </button>
+                </form>
+            @endif
+            
             <a href="{{ route('cashier.orders.index') }}" class="btn btn-light text-secondary w-100 rounded-pill fw-medium py-2">
                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar
             </a>
@@ -385,6 +395,26 @@
                 let change = cash - orderTotal;
                 if (change < 0) change = 0;
                 changeAmountDisplay.innerText = 'Rp ' + change.toLocaleString('id-ID');
+            });
+        }
+
+        const btnCancelOrder = document.getElementById('btnCancelOrder');
+        if (btnCancelOrder) {
+            btnCancelOrder.addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Batal Pesanan!',
+                    text: 'Apakah Anda yakin ingin membatalkan seluruh pesanan ini? Meja akan dikosongkan dan semua stok akan dikembalikan.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Batalkan!',
+                    cancelButtonText: 'Kembali'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('cancelOrderForm').submit();
+                    }
+                });
             });
         }
 
