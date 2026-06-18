@@ -98,12 +98,20 @@ class MenuController extends Controller
 
     public function destroy(Menu $menu)
     {
-        if ($menu->photo) {
-            Storage::disk('public')->delete($menu->photo);
-        }
-        
-        $menu->forceDelete(); // Delete permanently to avoid broken images later if soft deletes were used
+        try {
+            $photoPath = $menu->photo;
+            $menu->forceDelete(); // Delete permanently to avoid broken images later if soft deletes were used
+            
+            if ($photoPath) {
+                Storage::disk('public')->delete($photoPath);
+            }
 
-        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil dihapus.');
+            return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil dihapus.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->getCode() == "23000") {
+                return redirect()->route('admin.menus.index')->withErrors(['error' => 'Menu tidak dapat dihapus karena sudah terkait dengan data pesanan. Silakan nonaktifkan (uncheck "Aktif") menu ini.']);
+            }
+            return redirect()->route('admin.menus.index')->withErrors(['error' => 'Terjadi kesalahan saat menghapus menu.']);
+        }
     }
 }

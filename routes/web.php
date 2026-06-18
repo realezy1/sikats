@@ -53,6 +53,7 @@ Route::middleware(['auth', 'role:1,2'])->prefix('cashier')->name('cashier.')->gr
     Route::get('/orders/create', [\App\Http\Controllers\Cashier\OrderController::class, 'create'])->name('orders.create');
     Route::post('/orders', [\App\Http\Controllers\Cashier\OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}', [\App\Http\Controllers\Cashier\OrderController::class, 'show'])->name('orders.show');
+    Route::delete('/orders/{order}', [\App\Http\Controllers\Cashier\OrderController::class, 'destroy'])->name('orders.destroy');
     Route::post('/orders/{order}/items', [\App\Http\Controllers\Cashier\OrderController::class, 'addItem'])->name('orders.items.store');
     Route::delete('/orders/{order}/items/{item}', [\App\Http\Controllers\Cashier\OrderController::class, 'removeItem'])->name('orders.items.destroy');
     

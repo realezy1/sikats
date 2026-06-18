@@ -272,4 +272,22 @@ class OrderController extends Controller
 
         return redirect()->route('cashier.orders.index')->with('success', 'Pesanan ' . $order->id . ' berhasil diselesaikan.');
     }
+
+    public function destroy(Order $order)
+    {
+        if ($order->status !== 'unpaid') {
+            return back()->withErrors(['error' => 'Hanya pesanan yang belum dibayar yang dapat dibatalkan.']);
+        }
+
+        // Kembalikan semua stok menu
+        foreach ($order->items as $item) {
+            if ($item->status == 0) { // Hanya kembalikan stok jika item belum diproses dapur
+                $item->menu->increment('stock', $item->quantity);
+            }
+        }
+
+        $order->delete();
+
+        return redirect()->route('cashier.orders.index')->with('success', 'Pesanan ' . $order->id . ' berhasil dibatalkan dan meja telah dikosongkan.');
+    }
 }
