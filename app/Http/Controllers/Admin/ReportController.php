@@ -32,13 +32,13 @@ class ReportController extends Controller
         $endDate = $request->input('end_date') ? Carbon::parse($request->input('end_date'))->endOfDay() : Carbon::now()->endOfMonth();
 
         $reportData = $this->generateReportData($startDate, $endDate);
-        
+
         $data = array_merge($reportData, [
             'startDate' => $startDate,
             'endDate' => $endDate
         ]);
 
-        $pdf = Pdf::loadView('reports.pdf', $data);
+        $pdf = Pdf::loadView('admin.reports.pdf', $data);
         return $pdf->stream('Laporan-Penjualan-SiKats.pdf');
     }
 
@@ -61,7 +61,7 @@ class ReportController extends Controller
 
         // 3. Top Selling Items
         $orderIds = $orders->pluck('id');
-        
+
         $topItems = OrderItem::with('menu')
             ->whereIn('order_id', $orderIds)
             ->select('menu_id', DB::raw('SUM(quantity) as total_qty'), DB::raw('SUM(quantity * price_at_order) as total_revenue'))
@@ -71,16 +71,16 @@ class ReportController extends Controller
             ->get();
 
         // 4. Sales Chart Data (Group by Date)
-        $chartData = $orders->groupBy(function($order) {
+        $chartData = $orders->groupBy(function ($order) {
             return $order->created_at->format('Y-m-d');
-        })->map(function($dayOrders) {
+        })->map(function ($dayOrders) {
             return $dayOrders->sum('total');
         })->sortKeys();
 
         // Ensure we fill missing dates with 0 for a continuous chart line
         $dateLabels = [];
         $dateValues = [];
-        
+
         if ($startDate->diffInDays($endDate) <= 60) {
             $currentDate = clone $startDate;
             while ($currentDate <= $endDate) {
