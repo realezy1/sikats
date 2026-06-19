@@ -64,8 +64,8 @@
             </table>
         </div>
         
-        <div class="d-flex justify-content-end mt-4">
-            {{ $orders->links() }}
+        <div class="mt-4">
+            {{ $orders->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection
